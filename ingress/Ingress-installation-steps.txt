@@ -1,0 +1,31 @@
+#create name space and service account
+kubectl apply -f ns-sa.yaml
+
+#create default secret
+kubectl apply -f default-tls-secret.yaml
+
+#create configmap for customization
+kubectl apply -f ingress-config.yaml
+
+#create rbac
+kubectl apply -f rbac.yaml
+
+#deploy ingress controller
+kubectl apply -f ingress-deployment.yaml
+
+#create daemon set
+kubectl apply -f ingress-daemon-set.yaml
+
+#verify ingress
+kubectl get pods --namespace=nginx-ingress
+
+#create nodeport service
+kubectl apply -f nodeport-service.yaml
+
+#create loadbalancer service
+kubectl apply -f lb-service.yaml
+
+#viewing the ingress service
+kubectl get svc nginx-ingress --namespace=nginx-ingress
+
+
