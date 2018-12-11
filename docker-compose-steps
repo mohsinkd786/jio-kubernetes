@@ -1,0 +1,47 @@
+mkdir dock && cd dock
+mkdir web
+echo "<h2>Welcome to Docker Compose</h2>" > web/index.html
+
+#create Dockerfile
+
+FROM tecadmin/ubuntu-ssh:16.04
+
+RUN apt-get update \
+   && apt-get install -y apache2
+
+COPY index.html /var/www/html/
+WORKDIR /var/www/html
+CMD ["apachectl", "-D", "FOREGROUND"]
+EXPOSE 80
+
+#create docker-compose
+version: '3'
+services:
+  db:
+     image: mysql
+     container_name: mysql_db
+     restart: always
+     environment:
+        - MYSQL_ROOT_PASSWORD="secret"
+  web:
+    image: apache
+    build: ./webapp
+    depends_on:
+       - db
+    container_name: apache_web
+    restart: always
+    ports:
+      - "8111:80"
+
+#build docker image
+docker-compose build
+
+#launch docker containers
+docker-compose up -d
+
+#test container
+localhost:8111
+
+
+
+

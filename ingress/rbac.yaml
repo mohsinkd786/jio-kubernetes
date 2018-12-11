@@ -1,7 +1,7 @@
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: nginx-ingress
+  name: prometheus
 rules:
 - apiGroups:
   - ""
@@ -36,6 +36,8 @@ rules:
   - pods
   verbs:
   - list
+  - get
+  - delete
 - apiGroups:
   - ""
   resources:
@@ -61,12 +63,12 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: nginx-ingress
+  name: prometheus
 subjects:
 - kind: ServiceAccount
-  name: nginx-ingress
-  namespace: nginx-ingress
+  name: prometheus
+  namespace: default
 roleRef:
   kind: ClusterRole
-  name: nginx-ingress
+  name: prometheus
   apiGroup: rbac.authorization.k8s.io

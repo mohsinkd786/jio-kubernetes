@@ -16,4 +16,12 @@ spec:
     name: https
   selector:
     app: nginx-ingress
+    tls: default-server-secret
+    hosts:
+    - xyz.com
+  selector:
+    app: nginx-ingress-1
+    tls: default-server-secret-1
+    hosts:
+    - xyz.com/abc
     

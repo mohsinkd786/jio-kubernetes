@@ -5,6 +5,8 @@ metadata:
   namespace: nginx-ingress
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: nginx-ingress
@@ -15,7 +17,7 @@ spec:
     spec:
       serviceAccountName: nginx-ingress
       containers:
-      - image: nginx/nginx-ingress:edge
+      - image: nginx/nginx-ingress:edgef
         imagePullPolicy: Always
         name: nginx-ingress
         ports:
@@ -23,6 +25,7 @@ spec:
           containerPort: 80
         - name: https
           containerPort: 443
+        - allowRedirects: http
         env:
         - name: POD_NAMESPACE
           valueFrom:
